@@ -1,0 +1,7 @@
+{
+  "name": "Enprotec Workflow Management System",
+  "description": "An enterprise-grade workflow documentation and management system for industrial operations, stock management, and procurement processes. This application provides multi-path workflow management with integrated forms, real-time stock tracking, approval systems, and comprehensive reporting.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

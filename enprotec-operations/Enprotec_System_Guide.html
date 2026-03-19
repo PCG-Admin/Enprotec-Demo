@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enprotec Workflow Management System - System Guide</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            line-height: 1.6;
+            color: #333;
+            max-width: 960px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        h1, h2, h3, h4 {
+            font-weight: 600;
+            color: #222;
+        }
+        h1 {
+            font-size: 2.5em;
+            border-bottom: 2px solid #0ea5e9;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 2em;
+            margin-top: 40px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 8px;
+        }
+        h3 {
+            font-size: 1.5em;
+            margin-top: 30px;
+        }
+        h4 {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        code {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            background-color: #f6f8fa;
+            padding: .2em .4em;
+            margin: 0;
+            font-size: 85%;
+            border-radius: 6px;
+            border: 1px solid #eaeaea;
+        }
+        pre {
+            background-color: #f6f8fa;
+            padding: 16px;
+            overflow: auto;
+            border-radius: 6px;
+            border: 1px solid #eaeaea;
+        }
+        pre code {
+            border: none;
+            padding: 0;
+            margin: 0;
+            font-size: 100%;
+        }
+        .toc {
+            background-color: #f9f9f9;
+            border: 1px solid #eee;
+            padding: 15px 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .toc ul {
+            padding-left: 20px;
+        }
+        .note {
+            background-color: #fffbe6;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: 600;
+        }
+        .role-box {
+            background-color: #eef8ff;
+            border: 1px solid #d1eaff;
+            padding: 1px 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Enprotec Workflow Management System Guide</h1>
+    <p><strong>Version: 1.0</strong></p>
+
+    <div class="toc">
+        <h3>Table of Contents</h3>
+        <ul>
+            <li><a href="#introduction">1. Introduction</a></li>
+            <li><a href="#user-guide">2. User Guide</a>
+                <ul>
+                    <li><a href="#getting-started">2.1 Getting Started: Logging In</a></li>
+                    <li><a href="#role-specific-guides">2.2 Role-Specific Guides</a></li>
+                    <li><a href="#user-faq">2.3 User FAQ (Frequently Asked Questions)</a></li>
+                </ul>
+            </li>
+            <li><a href="#technical-guide">3. Technical Support Guide</a>
+                <ul>
+                    <li><a href="#system-architecture">3.1 System Architecture</a></li>
+                    <li><a href="#database-schema">3.2 Database Schema Deep Dive</a></li>
+                    <li><a href="#workflow-logic">3.3 Workflow & Business Logic</a></li>
+                    <li><a href="#troubleshooting">3.4 Troubleshooting Guide</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <h2 id="introduction">1. Introduction</h2>
+    <p>This document provides a comprehensive overview of the Enprotec Workflow Management System. The application is designed to digitize and streamline key operational processes, including internal stock requests, inventory management, and the handling of salvaged parts. Its goal is to provide a single source of truth, improve accountability, and create a complete audit trail for all operational workflows.</p>
+
+    <h2 id="user-guide">2. User Guide</h2>
+    <p>This section explains how to perform daily tasks within the system. It is organized by the primary roles within the company to help you find the information most relevant to your job.</p>
+
+    <h3 id="getting-started">2.1 Getting Started: Logging In</h3>
+    <ul>
+        <li><strong>Access:</strong> Navigate to the application's URL. You will be presented with a login screen.</li>
+        <li><strong>Credentials:</strong> Use the email address provided to you by the system administrator.</li>
+        <li><strong>Default Password:</strong> The default password for all users is <code>P</code>. You can see the password as you type by clicking the "eye" icon.</li>
+        <li><strong>Dashboard:</strong> Upon successful login, you will be taken directly to your personalized Dashboard. The pages you see in the sidebar on the left are determined by your assigned role.</li>
+    </ul>
+
+    <h3 id="role-specific-guides">2.2 Role-Specific Guides</h3>
+
+    <div class="role-box">
+        <h4>For the Site Manager, Project Manager, or Requester</h4>
+        <p>Your primary role is to request stock and confirm its delivery.</p>
+        <ol>
+            <li><strong>Creating a Stock Request:</strong> From the Dashboard or another relevant page, click a "New Stock Request" button. A form will appear.
+                <ul>
+                    <li>Fill in the destination site and date required.</li>
+                    <li>Use the searchable dropdown to find and add one or more parts.</li>
+                    <li>Optionally, attach a picture (e.g., a broken part) by clicking "Choose File". On mobile, this will let you use your camera.</li>
+                    <li>Optionally, add comments for the approvers.</li>
+                </ul>
+            </li>
+            <li><strong>Tracking Your Request:</strong> You can see the status of all your requests on the "Workflows" page.</li>
+            <li><strong>Accepting/Rejecting Delivery:</strong> Once an item has been physically delivered, it will appear on your personal <strong>"My Deliveries"</strong> page. This is your inbox for final confirmation.
+                <ul>
+                    <li>Click <strong>"Accept Delivery"</strong> if everything is correct. The workflow is now complete.</li>
+                    <li>Click <strong>"Reject"</strong> if there is a problem (e.g., damaged item, wrong quantity). You <strong>must</strong> provide a comment explaining the issue. The request will then be sent to the "Returns" page for the Stock Controller to process.</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <div class="role-box">
+        <h4>For the Stock Controller</h4>
+        <p>You manage the flow of inventory, from approvals to returns.</p>
+        <ol>
+            <li><strong>First-Level Approval (Requests Page):</strong> New stock requests appear on the <strong>"Stock Requests"</strong> page.
+                <ul>
+                    <li>Review each request. The "Qty on Hand" is shown to help you make a decision. An insufficient stock warning will appear in yellow.</li>
+                    <li>Click <strong>"Approve"</strong> to send it to the Equipment Manager for final approval.</li>
+                    <li>Click <strong>"Decline"</strong> and provide a reason if the request is invalid.</li>
+                    <li>Use the inline comments to communicate with the requester or manager.</li>
+                </ul>
+            </li>
+            <li><strong>Picking (Picking Page):</strong> Once a request is fully approved, it appears on the <strong>"Picking"</strong> page. This is your to-do list for the warehouse. After physically preparing the items, click <strong>"Mark as Picked & Loaded"</strong>.</li>
+            <li><strong>Handling Returns (Returns Page):</strong> Deliveries rejected by end-users appear on the <strong>"Returns"</strong> page.
+                <ul>
+                    <li>Review the item and the reason for rejection.</li>
+                    <li>Click <strong>"Book Back into Stock"</strong>. A pre-filled Stock Intake form will appear. Verify the details and submit to add the item back to your inventory.</li>
+                </ul>
+            </li>
+            <li><strong>Inventory Management (Stores Page):</strong> Use this page to view all inventory. The <strong>"Receive Stock"</strong> button opens a form to log new incoming deliveries.</li>
+        </ol>
+    </div>
+
+    <div class="role-box">
+        <h4>For the Equipment Manager</h4>
+        <p>You provide the final approval for stock requests and manage the salvage process.</p>
+        <ol>
+            <li><strong>Final Approval (Manager Approvals Page):</strong> Requests approved by the Stock Controller appear on the <strong>"Manager Approvals"</strong> page.
+                <ul>
+                    <li>Perform a final review of the request and stock levels.</li>
+                    <li>Click <strong>"Approve for Picking"</strong> to release the request to the warehouse for fulfillment.</li>
+                    <li>Click <strong>"Decline"</strong> and provide a reason if necessary.</li>
+                </ul>
+            </li>
+            <li><strong>Salvage Decisions (Salvage Store Page):</strong> Items booked into salvage appear on this page, awaiting your decision.
+                <ul>
+                    <li>For each item, you can choose to <strong>"Mark for Repair"</strong> or <strong>"Mark for Scrap"</strong>.</li>
+                    <li>After the physical repair or scrap has been done, you will return to this page to confirm it, which moves it to the final "Close Out" stage for the Stock Controller.</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+    
+    <div class="role-box">
+        <h4>For the Driver & Security</h4>
+        <p>Your work is focused on the <strong>"Deliveries"</strong> page.</p>
+        <ol>
+            <li><strong>Dispatching Items:</strong> Items ready to leave the warehouse appear in the "Ready for Dispatch" section.
+                <ul>
+                    <li>Click <strong>"Sign Gate Release & Dispatch"</strong>. A form will appear to capture dispatch details. Submitting this form moves the item to the "In Transit" section.</li>
+                </ul>
+            </li>
+            <li><strong>Confirming Delivery:</strong> Once the items have reached their destination, find the request in the "In Transit" section.
+                <ul>
+                    <li>Click <strong>"Confirm Delivery (EPOD)"</strong>. A form will appear to confirm receipt. Submitting this sends the request to the original requester's "My Deliveries" page for final acceptance.</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+    
+    <div class="role-box">
+        <h4>For Admins & Operations Managers</h4>
+        <p>You have oversight and management capabilities across the entire system.</p>
+        <ol>
+            <li><strong>Full Visibility:</strong> You have access to nearly all pages and can monitor all ongoing workflows.</li>
+            <li><strong>User Management (Users Page):</strong> You can add new users, edit existing user details (name, email, role, site), and activate or deactivate user accounts.</li>
+            <li><strong>Site Management (Sites Page):</strong> You can add new destination sites and freeze or activate existing ones. Freezing a site removes it from dropdowns for new requests but preserves historical data.</li>
+        </ol>
+    </div>
+
+    <h3 id="user-faq">2.3 User FAQ (Frequently Asked Questions)</h3>
+    <p><strong>Q: What happens if I reject a delivery?</strong><br>
+    A: The request is sent to the "Returns" page. A Stock Controller will review your rejection reason and book the item back into the system's inventory.</p>
+
+    <p><strong>Q: How do I track the status of my request?</strong><br>
+    A: Go to the "Workflows" page. You can find your request and see a visual indicator of its current stage in the process.</p>
+    
+    <p><strong>Q: What does "Frozen" mean for a site?</strong><br>
+    A: A frozen site is temporarily disabled. It will not appear as an option for new stock requests, but all past requests and data associated with it are kept for reporting purposes.</p>
+
+    <p><strong>Q: Why can't I see a certain page in the sidebar?</strong><br>
+    A: The pages you can see are determined by your user role. For example, only Stock Controllers can see the "Picking" page. If you believe you are missing access you need, please contact a system administrator.</p>
+
+
+    <h2 id="technical-guide">3. Technical Support Guide</h2>
+    <p>This section is intended for IT and technical support staff. It provides an overview of the system's architecture, database schema, and troubleshooting procedures.</p>
+
+    <h3 id="system-architecture">3.1 System Architecture</h3>
+    <p>The application is a modern single-page application (SPA) with a simple but robust architecture:</p>
+    <ul>
+        <li><strong>Frontend:</strong> Built with <strong>React 19</strong> and <strong>TypeScript</strong>. It uses the <code>ESM.sh</code> CDN via an import map in <code>index.html</code>, meaning there is no complex local build step required for dependencies.</li>
+        <li><strong>Backend & Database:</strong> Powered by <strong>Supabase</strong>.
+            <ul>
+                <li><strong>Database:</strong> A <strong>PostgreSQL</strong> database hosts all application data.</li>
+                <li><strong>Storage:</strong> Supabase Storage (in the "Enprotec" bucket) is used for handling file uploads.</li>
+                <li><strong>API:</strong> The application communicates with the database via the Supabase client library (<code>@supabase/supabase-js</code>). The connection details are configured in <code>supabase/client.ts</code>.</li>
+            </ul>
+        </li>
+        <li><strong>AI Services:</strong> Report summaries are generated by the configured AI provider (<code>gemini-2.5-flash</code> model), configured in <code>services/geminiService.ts</code>.</li>
+        <li><strong>Styling:</strong> **Tailwind CSS** is used for all styling via a CDN link in <code>index.html</code>.</li>
+    </ul>
+
+    <h3 id="database-schema">3.2 Database Schema Deep Dive</h3>
+    <p>All application data is stored in the <code>public</code> schema. The tables are prefixed with <code>en_</code>. Below are the key tables and their relationships.</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Table Name</th>
+                <th>Description</th>
+                <th>Key Relationships</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>en_users</code></td>
+                <td>Stores user credentials, roles, and profile info.</td>
+                <td>One-to-many with <code>en_workflow_requests</code> (as requester), <code>en_workflow_comments</code>, <code>en_stock_receipts</code>.</td>
+            </tr>
+            <tr>
+                <td><code>en_sites</code></td>
+                <td>The master list of all destination sites.</td>
+                <td>One-to-many with <code>en_workflow_requests</code> and <code>en_inventory</code>.</td>
+            </tr>
+            <tr>
+                <td><code>en_stock_items</code></td>
+                <td>The master list of unique parts (part number, description, etc.).</td>
+                <td>One-to-many with <code>en_inventory</code>, <code>en_workflow_items</code>, <code>en_stock_receipts</code>, <code>en_salvage_requests</code>.</td>
+            </tr>
+            <tr>
+                <td><code>en_inventory</code></td>
+                <td>Tracks the quantity of each stock item in each store and at each site.</td>
+                <td>Belongs to one <code>en_stock_items</code> and optionally one <code>en_sites</code>.</td>
+            </tr>
+            <tr>
+                <td><code>en_workflow_requests</code></td>
+                <td>The core table for all requests. Tracks status, requester, site, etc.</td>
+                <td>Has many <code>en_workflow_items</code> and <code>en_workflow_comments</code>. Belongs to one <code>en_users</code> and one <code>en_sites</code>.</td>
+            </tr>
+            <tr>
+                <td><code>en_workflow_items</code></td>
+                <td>The line items for each request.</td>
+                <td>Belongs to one <code>en_workflow_requests</code> and one <code>en_stock_items</code>.</td>
+            </tr>
+            <tr>
+                <td><code>en_workflow_comments</code></td>
+                <td>Stores all user comments linked to a specific workflow request.</td>
+                <td>Belongs to one <code>en_workflow_requests</code> and one <code>en_users</code>.</td>
+            </tr>
+            <tr>
+                <td><code>en_stock_receipts</code></td>
+                <td>An audit log of every time stock is received.</td>
+                <td>Belongs to one <code>en_stock_items</code> and one <code>en_users</code>.</td>
+            </tr>
+             <tr>
+                <td><code>en_salvage_requests</code></td>
+                <td>Tracks items moving through the salvage workflow.</td>
+                <td>Belongs to one <code>en_stock_items</code> and one <code>en_users</code>.</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="note">
+        <strong>Database Views:</strong> The application makes heavy use of Database Views (e.g., <code>en_workflows_view</code>, <code>en_stock_view</code>) to pre-join tables. This simplifies frontend queries and improves performance. If a field appears missing in the app, checking the definition of the relevant view in the database schema is a good first step.
+    </div>
+
+    <h3 id="workflow-logic">3.3 Workflow & Business Logic</h3>
+    <h4>Main Internal Request Flow Status Transitions:</h4>
+    <ol>
+        <li><code>Request Submitted</code> (by Requester on Stock Request Form)</li>
+        <li><code>Awaiting Equip. Manager</code> (by Stock Controller on Requests page)</li>
+        <li><code>Awaiting Picking</code> (by Equipment Manager on Manager Approvals page)</li>
+        <li><code>Picked & Loaded</code> (by Stock Controller on Picking page)</li>
+        <li><code>Dispatched</code> (by Driver/Security on Deliveries page via Gate Release form)</li>
+        <li><code>EPOD Confirmed</code> (by Driver/Site Manager on Deliveries page via EPOD form)</li>
+        <li><code>Completed</code> (by original Requester on My Deliveries page)</li>
+    </ol>
+    <h4>Rejection Paths:</h4>
+    <ul>
+        <li>A request can be set to <code>Request Declined</code> from the Requests or Manager Approvals pages. A reason is required.</li>
+        <li>A delivery can be set to <code>Rejected at Delivery</code> from the My Deliveries page. This moves it to the Returns page for processing.</li>
+    </ul>
+
+    <h4>Automatic Stock Deduction Trigger:</h4>
+    <p>A critical piece of server-side logic is the PostgreSQL trigger named <code>on_dispatch_trigger</code>. This function automatically fires when a request's status is updated to <code>'Dispatched'</code>. It then deducts the requested item quantities from the inventory record in the <code>'Operations Store'</code>. This ensures stock levels are updated accurately without relying on the client application.</p>
+    
+    <h3 id="troubleshooting">3.4 Troubleshooting Guide</h3>
+    
+    <p><strong>Problem: User cannot log in.</strong><br>
+    <strong>Solution:</strong>
+        1. Verify their email address is correct in the <code>en_users</code> table in Supabase.
+        2. Remind them that the default password for all users is <strong><code>P</code></strong>. The password in the database is currently stored in plain text.
+    </p>
+
+    <p><strong>Problem: A user cannot see a page they are supposed to.</strong><br>
+    <strong>Solution:</strong> Check the <code>viewPermissions</code> object in <code>App.tsx</code>. The user's role must be listed in the array for the specific view they are trying to access. The sidebar visibility is controlled by this same object.</p>
+
+    <p><strong>Problem: Data is not updating after an action (e.g., an approved request still shows up).</strong><br>
+    <strong>Solution:</strong> This indicates an issue with the state-refresh mechanism.
+        1. Check the component where the action is performed (e.g., <code>Requests.tsx</code>). Ensure the <code>onDataChange()</code> prop is being called after a successful Supabase update.
+        2. Check the component that is displaying stale data (e.g., <code>Picking.tsx</code>). Ensure it is listening to the <code>dataVersion</code> prop in its <code>useEffect</code> hook to trigger a re-fetch.
+    </p>
+
+    <p><strong>Problem: A form submission is failing silently or with a generic error.</strong><br>
+    <strong>Solution:</strong>
+        1. Open the browser's Developer Tools (F12) and check the <strong>Console</strong> tab for any red error messages from the application code.
+        2. Check the <strong>Network</strong> tab. Look for the Supabase API call (it will start with <code>ndjaufwwbtekysvrmhwm.supabase.co</code>). Check its response for a more detailed database error message.
+        3. Check the database logs directly in the Supabase Dashboard for the most detailed error information.
+    </p>
+
+    <p><strong>Problem: The application is crashing on load or showing widespread TypeScript errors after a code change.</strong><br>
+    <strong>Solution:</strong> This almost always points to an issue with the auto-generated types from Supabase.
+        1. The most likely culprit is <code>supabase/database.types.ts</code>. It may be out of sync with the actual database schema.
+        2. The standard fix is to use the Supabase CLI to regenerate this file from your database schema: <code>npx supabase gen types typescript --project-id YOUR_PROJECT_ID > supabase/database.types.ts</code>.
+    </p>
+
+    <p><strong>Problem: A SQL script fails with <code>ERROR: unsafe use of new value ... of enum type</code>.</strong><br>
+    <strong>Solution:</strong> This is a known PostgreSQL transaction issue. Any script that adds a new value to an <code>ENUM</code> (like a new user role or workflow status) must be split into two parts.
+        1. Run the <code>ALTER TYPE ... ADD VALUE</code> command(s) first, in a separate transaction.
+        2. After it succeeds, run the rest of the script that uses the new value (e.g., <code>INSERT</code> statements or <code>CREATE VIEW</code>).
+    </p>
+
+</body>
+</html>

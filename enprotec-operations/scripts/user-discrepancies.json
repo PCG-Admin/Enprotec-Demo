@@ -1,0 +1,110 @@
+[
+  {
+    "email": "reinard.griesel@enprotec.com",
+    "dbId": "978a2d97-4a29-43c7-b4bb-cb07d05dfd5c",
+    "clearanceLevel": "Level 3",
+    "issues": [
+      {
+        "field": "role",
+        "expected": "Admin",
+        "actual": "Project Manager"
+      }
+    ]
+  },
+  {
+    "email": "jaco.pieterse@enprotec.com",
+    "dbId": "c805efc7-669d-4762-bfa7-3aa691519f67",
+    "clearanceLevel": "Level 3",
+    "issues": [
+      {
+        "field": "role",
+        "expected": "Admin",
+        "actual": "Project Manager"
+      }
+    ]
+  },
+  {
+    "email": "riaant@enprotec.com",
+    "dbId": "82caf45a-798e-4618-99eb-68cdc66c9c8b",
+    "clearanceLevel": "Level 2",
+    "issues": [
+      {
+        "field": "role",
+        "expected": "Operations Manager",
+        "actual": "Project Manager"
+      }
+    ]
+  },
+  {
+    "email": "phethani.ravele@enprotec.com",
+    "dbId": "d010387c-a54f-46d3-8119-19603f46b4d0",
+    "clearanceLevel": "Level 2",
+    "issues": [
+      {
+        "field": "role",
+        "expected": "Operations Manager",
+        "actual": "Project Manager"
+      }
+    ]
+  },
+  {
+    "email": "jujuan.kasselman@enprotec.com",
+    "dbId": "4c326e58-a79a-400d-af47-3d38bcb6f5cf",
+    "clearanceLevel": "Level 1",
+    "issues": [
+      {
+        "field": "departments",
+        "expected": [],
+        "actual": [
+          "OEM",
+          "Operations"
+        ]
+      }
+    ]
+  },
+  {
+    "email": "sboniso.thage@enprotec.com",
+    "dbId": "967651dc-91a7-42a9-9242-6a47af4ba0c7",
+    "clearanceLevel": "Level 1",
+    "issues": [
+      {
+        "field": "departments",
+        "expected": [],
+        "actual": [
+          "OEM",
+          "Operations"
+        ]
+      }
+    ]
+  },
+  {
+    "email": "riaan.visser@enprotec.com",
+    "dbId": "b803a2a6-c2e6-4e46-bd90-f7be97f2fd85",
+    "clearanceLevel": "Level 1",
+    "issues": [
+      {
+        "field": "departments",
+        "expected": [],
+        "actual": [
+          "OEM",
+          "Operations"
+        ]
+      }
+    ]
+  },
+  {
+    "email": "riaan.botha@enprotec.com",
+    "dbId": "a9b10553-5acc-49dc-90db-5b7ef6e47c09",
+    "clearanceLevel": "Level 1",
+    "issues": [
+      {
+        "field": "departments",
+        "expected": [],
+        "actual": [
+          "OEM",
+          "Operations"
+        ]
+      }
+    ]
+  }
+]
