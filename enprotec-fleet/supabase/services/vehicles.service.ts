@@ -8,7 +8,7 @@ const VEHICLE_SELECT = '*, site:enprotec_sites(id, name), driver:enprotec_users(
 
 export async function getVehicles(): Promise<VehicleRow[]> {
   const { data, error } = await supabase
-    .from('vehicles')
+    .from('enprotec_vehicles')
     .select(VEHICLE_SELECT)
     .order('registration');
   if (error) throw error;
@@ -17,7 +17,7 @@ export async function getVehicles(): Promise<VehicleRow[]> {
 
 export async function getVehicle(id: string): Promise<VehicleRow | null> {
   const { data, error } = await supabase
-    .from('vehicles')
+    .from('enprotec_vehicles')
     .select(VEHICLE_SELECT)
     .eq('id', id)
     .single();
@@ -27,7 +27,7 @@ export async function getVehicle(id: string): Promise<VehicleRow | null> {
 
 export async function createVehicle(vehicle: VehicleInsert): Promise<VehicleRow> {
   const { data, error } = await supabase
-    .from('vehicles')
+    .from('enprotec_vehicles')
     .insert(vehicle)
     .select(VEHICLE_SELECT)
     .single();
@@ -37,7 +37,7 @@ export async function createVehicle(vehicle: VehicleInsert): Promise<VehicleRow>
 
 export async function updateVehicle(id: string, updates: VehicleUpdate): Promise<VehicleRow> {
   const { data, error } = await supabase
-    .from('vehicles')
+    .from('enprotec_vehicles')
     .update(updates)
     .eq('id', id)
     .select(VEHICLE_SELECT)

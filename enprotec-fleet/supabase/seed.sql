@@ -58,7 +58,7 @@ ON CONFLICT DO NOTHING;
 --        They use 'NEW-VIN-...' as a placeholder.
 -- =============================================================
 
-INSERT INTO public.vehicles
+INSERT INTO public.enprotec_vehicles
   (registration, make, model, vehicle_type, vin, site_name, assigned_driver, fuel_type, status)
 VALUES
 
@@ -207,7 +207,7 @@ ON CONFLICT (registration) DO NOTHING;
 --  Link vehicles to sites by matching site_name
 -- =============================================================
 
-UPDATE public.vehicles v
+UPDATE public.enprotec_vehicles v
 SET site_id = s.id
 FROM public.sites s
 WHERE v.site_name = s.name

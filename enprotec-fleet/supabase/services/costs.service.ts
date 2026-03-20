@@ -4,11 +4,11 @@ import type { CostRow, CostCat } from '../database.types';
 export type CostInsert = Omit<CostRow, 'id' | 'created_at' | 'updated_at' | 'vehicle'>;
 export type CostUpdate = Partial<CostInsert>;
 
-const COST_SELECT = '*, vehicle:vehicles(id, registration, make, model)';
+const COST_SELECT = '*, vehicle:enprotec_vehicles(id, registration, make, model)';
 
 export async function getCosts(limit = 200): Promise<CostRow[]> {
   const { data, error } = await supabase
-    .from('costs')
+    .from('enprotec_costs')
     .select(COST_SELECT)
     .order('date', { ascending: false })
     .limit(limit);
@@ -18,7 +18,7 @@ export async function getCosts(limit = 200): Promise<CostRow[]> {
 
 export async function getCostsByVehicle(vehicleId: string): Promise<CostRow[]> {
   const { data, error } = await supabase
-    .from('costs')
+    .from('enprotec_costs')
     .select(COST_SELECT)
     .eq('vehicle_id', vehicleId)
     .order('date', { ascending: false });
@@ -28,7 +28,7 @@ export async function getCostsByVehicle(vehicleId: string): Promise<CostRow[]> {
 
 export async function getCostsByDateRange(from: string, to: string): Promise<CostRow[]> {
   const { data, error } = await supabase
-    .from('costs')
+    .from('enprotec_costs')
     .select(COST_SELECT)
     .gte('date', from)
     .lte('date', to)
@@ -39,7 +39,7 @@ export async function getCostsByDateRange(from: string, to: string): Promise<Cos
 
 export async function getCostsByCategory(category: CostCat): Promise<CostRow[]> {
   const { data, error } = await supabase
-    .from('costs')
+    .from('enprotec_costs')
     .select(COST_SELECT)
     .eq('category', category)
     .order('date', { ascending: false });
@@ -49,7 +49,7 @@ export async function getCostsByCategory(category: CostCat): Promise<CostRow[]> 
 
 export async function createCost(cost: CostInsert): Promise<CostRow> {
   const { data, error } = await supabase
-    .from('costs')
+    .from('enprotec_costs')
     .insert(cost)
     .select(COST_SELECT)
     .single();
@@ -59,7 +59,7 @@ export async function createCost(cost: CostInsert): Promise<CostRow> {
 
 export async function updateCost(id: string, updates: CostUpdate): Promise<CostRow> {
   const { data, error } = await supabase
-    .from('costs')
+    .from('enprotec_costs')
     .update(updates)
     .eq('id', id)
     .select(COST_SELECT)

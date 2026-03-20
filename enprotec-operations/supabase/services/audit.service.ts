@@ -5,7 +5,7 @@ export type AuditInsert = Omit<AuditRow, 'id' | 'created_at'>;
 
 export async function getAuditLog(limit = 100): Promise<AuditRow[]> {
   const { data, error } = await supabase
-    .from('audit_log')
+    .from('enprotec_audit_log')
     .select('*')
     .order('created_at', { ascending: false })
     .limit(limit);
@@ -15,7 +15,7 @@ export async function getAuditLog(limit = 100): Promise<AuditRow[]> {
 
 export async function getAuditByModule(module: string, limit = 50): Promise<AuditRow[]> {
   const { data, error } = await supabase
-    .from('audit_log')
+    .from('enprotec_audit_log')
     .select('*')
     .eq('module', module)
     .order('created_at', { ascending: false })
@@ -25,7 +25,7 @@ export async function getAuditByModule(module: string, limit = 50): Promise<Audi
 }
 
 export async function writeAuditEntry(entry: AuditInsert): Promise<void> {
-  const { error } = await supabase.from('audit_log').insert(entry);
+  const { error } = await supabase.from('enprotec_audit_log').insert(entry);
   if (error) console.error('Audit log write failed:', error.message);
 }
 

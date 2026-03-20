@@ -202,37 +202,37 @@ export interface Database {
         Insert: Omit<SiteRow, 'id'>;
         Update: Partial<Omit<SiteRow, 'id'>>;
       };
-      vehicles: {
+      enprotec_vehicles: {
         Row: VehicleRow;
         Insert: Omit<VehicleRow, 'id' | 'created_at' | 'updated_at' | 'site' | 'driver'>;
         Update: Partial<Omit<VehicleRow, 'id' | 'created_at' | 'updated_at' | 'site' | 'driver'>>;
       };
-      inspection_templates: {
+      enprotec_inspection_templates: {
         Row: TemplateRow;
         Insert: Omit<TemplateRow, 'id' | 'created_at' | 'updated_at'>;
         Update: Partial<Omit<TemplateRow, 'id' | 'created_at' | 'updated_at'>>;
       };
-      inspections: {
+      enprotec_inspections: {
         Row: InspectionRow;
         Insert: Omit<InspectionRow, 'id' | 'created_at' | 'updated_at' | 'vehicle' | 'inspector'>;
         Update: Partial<Omit<InspectionRow, 'id' | 'created_at' | 'updated_at' | 'vehicle' | 'inspector'>>;
       };
-      licenses: {
+      enprotec_licenses: {
         Row: LicenseRow;
         Insert: Omit<LicenseRow, 'id' | 'created_at' | 'updated_at'>;
         Update: Partial<Omit<LicenseRow, 'id' | 'created_at' | 'updated_at'>>;
       };
-      costs: {
+      enprotec_costs: {
         Row: CostRow;
         Insert: Omit<CostRow, 'id' | 'created_at' | 'updated_at' | 'vehicle'>;
         Update: Partial<Omit<CostRow, 'id' | 'created_at' | 'updated_at' | 'vehicle'>>;
       };
-      compliance_schedule: {
+      enprotec_compliance_schedule: {
         Row: ComplianceRow;
         Insert: Omit<ComplianceRow, 'id' | 'created_at' | 'updated_at' | 'vehicle' | 'assignee'>;
         Update: Partial<Omit<ComplianceRow, 'id' | 'created_at' | 'updated_at' | 'vehicle' | 'assignee'>>;
       };
-      audit_log: {
+      enprotec_audit_log: {
         Row: AuditRow;
         Insert: Omit<AuditRow, 'id' | 'created_at'>;
         Update: never;

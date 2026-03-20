@@ -24,7 +24,7 @@ export function licenseUrgency(expiryDate: string): 'expired' | 'critical' | 'wa
 
 export async function getLicenses(): Promise<LicenseRow[]> {
   const { data, error } = await supabase
-    .from('licenses')
+    .from('enprotec_licenses')
     .select('*')
     .order('expiry_date');
   if (error) throw error;
@@ -33,7 +33,7 @@ export async function getLicenses(): Promise<LicenseRow[]> {
 
 export async function getLicensesByVehicle(vehicleId: string): Promise<LicenseRow[]> {
   const { data, error } = await supabase
-    .from('licenses')
+    .from('enprotec_licenses')
     .select('*')
     .eq('vehicle_id', vehicleId)
     .order('expiry_date');
@@ -45,7 +45,7 @@ export async function getExpiringLicenses(withinDays = 30): Promise<LicenseRow[]
   const cutoff = new Date();
   cutoff.setDate(cutoff.getDate() + withinDays);
   const { data, error } = await supabase
-    .from('licenses')
+    .from('enprotec_licenses')
     .select('*')
     .lte('expiry_date', cutoff.toISOString().slice(0, 10))
     .gte('expiry_date', new Date().toISOString().slice(0, 10))
@@ -56,7 +56,7 @@ export async function getExpiringLicenses(withinDays = 30): Promise<LicenseRow[]
 
 export async function createLicense(license: LicenseInsert): Promise<LicenseRow> {
   const { data, error } = await supabase
-    .from('licenses')
+    .from('enprotec_licenses')
     .insert(license)
     .select()
     .single();
@@ -66,7 +66,7 @@ export async function createLicense(license: LicenseInsert): Promise<LicenseRow>
 
 export async function updateLicense(id: string, updates: LicenseUpdate): Promise<LicenseRow> {
   const { data, error } = await supabase
-    .from('licenses')
+    .from('enprotec_licenses')
     .update(updates)
     .eq('id', id)
     .select()
@@ -76,7 +76,7 @@ export async function updateLicense(id: string, updates: LicenseUpdate): Promise
 }
 
 export async function deleteLicense(id: string): Promise<void> {
-  const { error } = await supabase.from('licenses').delete().eq('id', id);
+  const { error } = await supabase.from('enprotec_licenses').delete().eq('id', id);
   if (error) throw error;
 }
 

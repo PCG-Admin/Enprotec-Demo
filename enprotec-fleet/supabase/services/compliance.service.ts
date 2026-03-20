@@ -4,11 +4,11 @@ import type { ComplianceRow, CompStatus } from '../database.types';
 export type ComplianceInsert = Omit<ComplianceRow, 'id' | 'created_at' | 'updated_at' | 'vehicle' | 'assignee'>;
 export type ComplianceUpdate = Partial<ComplianceInsert>;
 
-const COMPLIANCE_SELECT = '*, vehicle:vehicles(id, registration, make, model)';
+const COMPLIANCE_SELECT = '*, vehicle:enprotec_vehicles(id, registration, make, model)';
 
 export async function getComplianceSchedule(): Promise<ComplianceRow[]> {
   const { data, error } = await supabase
-    .from('compliance_schedule')
+    .from('enprotec_compliance_schedule')
     .select(COMPLIANCE_SELECT)
     .order('due_date');
   if (error) throw error;
@@ -17,7 +17,7 @@ export async function getComplianceSchedule(): Promise<ComplianceRow[]> {
 
 export async function getComplianceByStatus(status: CompStatus): Promise<ComplianceRow[]> {
   const { data, error } = await supabase
-    .from('compliance_schedule')
+    .from('enprotec_compliance_schedule')
     .select(COMPLIANCE_SELECT)
     .eq('status', status)
     .order('due_date');
@@ -27,7 +27,7 @@ export async function getComplianceByStatus(status: CompStatus): Promise<Complia
 
 export async function getComplianceByVehicle(vehicleId: string): Promise<ComplianceRow[]> {
   const { data, error } = await supabase
-    .from('compliance_schedule')
+    .from('enprotec_compliance_schedule')
     .select(COMPLIANCE_SELECT)
     .eq('vehicle_id', vehicleId)
     .order('due_date');
@@ -37,7 +37,7 @@ export async function getComplianceByVehicle(vehicleId: string): Promise<Complia
 
 export async function createComplianceEntry(entry: ComplianceInsert): Promise<ComplianceRow> {
   const { data, error } = await supabase
-    .from('compliance_schedule')
+    .from('enprotec_compliance_schedule')
     .insert(entry)
     .select(COMPLIANCE_SELECT)
     .single();
@@ -47,7 +47,7 @@ export async function createComplianceEntry(entry: ComplianceInsert): Promise<Co
 
 export async function updateComplianceEntry(id: string, updates: ComplianceUpdate): Promise<ComplianceRow> {
   const { data, error } = await supabase
-    .from('compliance_schedule')
+    .from('enprotec_compliance_schedule')
     .update(updates)
     .eq('id', id)
     .select(COMPLIANCE_SELECT)
@@ -77,14 +77,14 @@ export async function syncComplianceStatuses(): Promise<void> {
 
   // Mark overdue
   await supabase
-    .from('compliance_schedule')
+    .from('enprotec_compliance_schedule')
     .update({ status: 'Overdue' })
     .lt('due_date', today)
     .neq('status', 'Completed');
 
   // Mark due soon
   await supabase
-    .from('compliance_schedule')
+    .from('enprotec_compliance_schedule')
     .update({ status: 'Due Soon' })
     .gte('due_date', today)
     .lte('due_date', soonStr)

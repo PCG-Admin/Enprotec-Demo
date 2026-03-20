@@ -4,11 +4,11 @@ import type { InspectionRow } from '../database.types';
 export type InspectionInsert = Omit<InspectionRow, 'id' | 'created_at' | 'updated_at' | 'vehicle' | 'inspector'>;
 export type InspectionUpdate = Partial<InspectionInsert>;
 
-const INSPECTION_SELECT = '*, vehicle:vehicles(id, registration, make, model), inspector:enprotec_users(id, name, email)';
+const INSPECTION_SELECT = '*, vehicle:enprotec_vehicles(id, registration, make, model), inspector:enprotec_users(id, name, email)';
 
 export async function getInspections(limit = 100): Promise<InspectionRow[]> {
   const { data, error } = await supabase
-    .from('inspections')
+    .from('enprotec_inspections')
     .select(INSPECTION_SELECT)
     .order('started_at', { ascending: false })
     .limit(limit);
@@ -18,7 +18,7 @@ export async function getInspections(limit = 100): Promise<InspectionRow[]> {
 
 export async function getInspectionsByVehicle(vehicleId: string): Promise<InspectionRow[]> {
   const { data, error } = await supabase
-    .from('inspections')
+    .from('enprotec_inspections')
     .select(INSPECTION_SELECT)
     .eq('vehicle_id', vehicleId)
     .order('started_at', { ascending: false });
@@ -28,7 +28,7 @@ export async function getInspectionsByVehicle(vehicleId: string): Promise<Inspec
 
 export async function getInspection(id: string): Promise<InspectionRow | null> {
   const { data, error } = await supabase
-    .from('inspections')
+    .from('enprotec_inspections')
     .select(INSPECTION_SELECT)
     .eq('id', id)
     .single();
@@ -38,7 +38,7 @@ export async function getInspection(id: string): Promise<InspectionRow | null> {
 
 export async function createInspection(inspection: InspectionInsert): Promise<InspectionRow> {
   const { data, error } = await supabase
-    .from('inspections')
+    .from('enprotec_inspections')
     .insert(inspection)
     .select(INSPECTION_SELECT)
     .single();
@@ -48,7 +48,7 @@ export async function createInspection(inspection: InspectionInsert): Promise<In
 
 export async function updateInspection(id: string, updates: InspectionUpdate): Promise<InspectionRow> {
   const { data, error } = await supabase
-    .from('inspections')
+    .from('enprotec_inspections')
     .update(updates)
     .eq('id', id)
     .select(INSPECTION_SELECT)
@@ -58,7 +58,7 @@ export async function updateInspection(id: string, updates: InspectionUpdate): P
 }
 
 export async function deleteInspection(id: string): Promise<void> {
-  const { error } = await supabase.from('inspections').delete().eq('id', id);
+  const { error } = await supabase.from('enprotec_inspections').delete().eq('id', id);
   if (error) throw error;
 }
 
@@ -67,7 +67,7 @@ export async function getRecentInspections(days = 7): Promise<InspectionRow[]> {
   const since = new Date();
   since.setDate(since.getDate() - days);
   const { data, error } = await supabase
-    .from('inspections')
+    .from('enprotec_inspections')
     .select(INSPECTION_SELECT)
     .gte('started_at', since.toISOString())
     .order('started_at', { ascending: false });
@@ -80,7 +80,7 @@ export async function getRecentInspectionsByInspector(inspectorId: string, days 
   const since = new Date();
   since.setDate(since.getDate() - days);
   const { data, error } = await supabase
-    .from('inspections')
+    .from('enprotec_inspections')
     .select(INSPECTION_SELECT)
     .eq('inspector_id', inspectorId)
     .gte('started_at', since.toISOString())
@@ -92,7 +92,7 @@ export async function getRecentInspectionsByInspector(inspectorId: string, days 
 /** All inspections by a specific inspector */
 export async function getInspectionsByInspector(inspectorId: string): Promise<InspectionRow[]> {
   const { data, error } = await supabase
-    .from('inspections')
+    .from('enprotec_inspections')
     .select(INSPECTION_SELECT)
     .eq('inspector_id', inspectorId)
     .order('started_at', { ascending: false });
@@ -105,7 +105,7 @@ export async function getOverdueCount(): Promise<number> {
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
   const { count, error } = await supabase
-    .from('inspections')
+    .from('enprotec_inspections')
     .select('id', { count: 'exact', head: true })
     .eq('status', 'in_progress')
     .lt('started_at', yesterday.toISOString());
