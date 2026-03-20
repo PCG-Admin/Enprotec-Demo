@@ -287,7 +287,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
               </span>
             )}
           </div>
-          <h2 className="text-xl font-bold text-gray-900 mb-1 text-center">Sign in to MindRift</h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-1 text-center">Sign in to Enprotec Demo</h2>
           <p className="text-gray-500 text-sm mb-6 text-center">Enter your credentials to continue</p>
           {loginForm}
         </div>
