@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { supabase } from '../../../supabase/client';
 import type { Database } from '../../supabase/database.types';
 
-type VehicleInsert = Database['public']['Tables']['en_inspection_report_vehicles']['Insert'];
+type VehicleInsert = Database['public']['Tables']['enprotec_inspection_report_vehicles']['Insert'];
 
 interface CreateVehicleFormProps {
-  onSuccess: (vehicle: Database['public']['Tables']['en_inspection_report_vehicles']['Row']) => void;
+  onSuccess: (vehicle: Database['public']['Tables']['enprotec_inspection_report_vehicles']['Row']) => void;
   onCancel: () => void;
 }
 
@@ -66,7 +66,7 @@ const CreateVehicleForm: React.FC<CreateVehicleFormProps> = ({ onSuccess, onCanc
       };
 
       const { data, error: insertError } = await supabase
-        .from('en_inspection_report_vehicles')
+        .from('enprotec_inspection_report_vehicles')
         .insert(payload)
         .select('*')
         .single();

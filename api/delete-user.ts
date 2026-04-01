@@ -38,7 +38,7 @@ export const handleDeleteUser = async (
 
   // Check if user exists in database
   const { data: existingUser, error: fetchError } = await supabaseAdmin
-    .from('en_users')
+    .from('enprotec_users')
     .select('id, email, name')
     .eq('id', payload.userId)
     .maybeSingle();
@@ -62,7 +62,7 @@ export const handleDeleteUser = async (
 
   // Delete from en_users table first
   const { error: deleteProfileError } = await supabaseAdmin
-    .from('en_users')
+    .from('enprotec_users')
     .delete()
     .eq('id', payload.userId);
 

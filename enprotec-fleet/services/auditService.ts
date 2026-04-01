@@ -14,7 +14,7 @@ export interface AuditLogEntry {
 export const auditService = {
     async getLogs(limit = 50) {
         const { data, error } = await supabase
-            .from('en_audit_logs')
+            .from('enprotec_audit_logs')
             .select('*, user:enprotec_users(name)')
             .order('created_at', { ascending: false })
             .limit(limit);
@@ -24,7 +24,7 @@ export const auditService = {
     },
 
     async logAction(userId: string, action: string, entityType: string, entityId: string | null, details: any) {
-        const { error } = await supabase.from('en_audit_logs').insert({
+        const { error } = await supabase.from('enprotec_audit_logs').insert({
             user_id: userId,
             action,
             entity_type: entityType,

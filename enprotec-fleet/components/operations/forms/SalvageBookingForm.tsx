@@ -124,7 +124,7 @@ const SalvageBookingForm: React.FC<SalvageBookingFormProps> = ({ user, stockItem
                     note: 'Booked to salvage'
                 },
             ];
-            const { error: movementError } = await supabase.from('en_stock_movements').insert(movements);
+            const { error: movementError } = await supabase.from('enprotec_stock_movements').insert(movements);
             if (movementError) throw movementError;
 
             // Step 2: Deduct quantity from the original store

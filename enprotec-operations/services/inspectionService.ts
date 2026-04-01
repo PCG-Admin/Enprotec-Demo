@@ -6,7 +6,7 @@ export const fetchInspectionDetail = async (
   inspectionId: string
 ): Promise<InspectionDetail> => {
   const { data, error } = await supabase
-    .from('en_inspection_report_inspections')
+    .from('enprotec_inspection_report_inspections')
     .select(
       `
         id,
@@ -15,22 +15,22 @@ export const fetchInspectionDetail = async (
         overall_status,
         odometer,
         remarks,
-        vehicle:en_inspection_report_vehicles (
+        vehicle:enprotec_inspection_report_vehicles (
           registration_number,
           make,
           model
         ),
-        driver:en_inspection_report_drivers (
+        driver:enprotec_inspection_report_drivers (
           full_name,
           email
         ),
-        responses:en_inspection_report_responses (
+        responses:enprotec_inspection_report_responses (
           id,
           condition,
           notes,
           photo_url,
           storage_bucket,
-          item:en_inspection_report_items (
+          item:enprotec_inspection_report_items (
             question,
             category,
             correct_answer

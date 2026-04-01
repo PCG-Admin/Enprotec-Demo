@@ -54,7 +54,7 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
   }
 
   const { data: profile, error: profileError } = await admin
-    .from('en_users')
+    .from('enprotec_users')
     .upsert({
       id: authData.user.id,
       name: payload.name,

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { supabase } from '../../../supabase/client';
 import type { Database } from '../../supabase/database.types';
 
-type DriverInsert = Database['public']['Tables']['en_inspection_report_drivers']['Insert'];
-type DriverRow = Database['public']['Tables']['en_inspection_report_drivers']['Row'];
+type DriverInsert = Database['public']['Tables']['enprotec_inspection_report_drivers']['Insert'];
+type DriverRow = Database['public']['Tables']['enprotec_inspection_report_drivers']['Row'];
 
 interface CreateDriverFormProps {
   onSuccess: (driver: DriverRow) => void;
@@ -51,7 +51,7 @@ const CreateDriverForm: React.FC<CreateDriverFormProps> = ({ onSuccess, onCancel
       };
 
       const { data, error: insertError } = await supabase
-        .from('en_inspection_report_drivers')
+        .from('enprotec_inspection_report_drivers')
         .insert(payload)
         .select('*')
         .single();

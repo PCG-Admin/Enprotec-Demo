@@ -12,9 +12,9 @@ import CreateVehicleForm from './forms/CreateVehicleForm';
 import CreateDriverForm from './forms/CreateDriverForm';
 import { sendInspectionCompletedWebhook } from '../services/inspectionService';
 
-type InspectionItem = Database['public']['Tables']['en_inspection_report_items']['Row'];
-type Vehicle = Database['public']['Tables']['en_inspection_report_vehicles']['Row'];
-type DriverRow = Database['public']['Tables']['en_inspection_report_drivers']['Row'];
+type InspectionItem = Database['public']['Tables']['enprotec_inspection_report_items']['Row'];
+type Vehicle = Database['public']['Tables']['enprotec_inspection_report_vehicles']['Row'];
+type DriverRow = Database['public']['Tables']['enprotec_inspection_report_drivers']['Row'];
 
 interface DriverOption {
   id: string;
@@ -91,16 +91,16 @@ const InspectionReport: React.FC<InspectionReportProps> = ({ user, onSuccess }) 
           { data: driverRows, error: driversError },
         ] = await Promise.all([
           supabase
-            .from('en_inspection_report_items')
+            .from('enprotec_inspection_report_items')
             .select('*')
             .order('category', { ascending: true })
             .order('question', { ascending: true }),
           supabase
-            .from('en_inspection_report_vehicles')
+            .from('enprotec_inspection_report_vehicles')
             .select('*')
             .order('registration_number', { ascending: true }),
           supabase
-            .from('en_inspection_report_drivers')
+            .from('enprotec_inspection_report_drivers')
             .select('*')
             .order('full_name', { ascending: true }),
         ]);
@@ -309,7 +309,7 @@ const InspectionReport: React.FC<InspectionReportProps> = ({ user, onSuccess }) 
       const overallStatus = hasFailures ? 'fail' : 'pass';
 
       const { data: inspectionRecord, error: inspectionError } = await supabase
-        .from('en_inspection_report_inspections')
+        .from('enprotec_inspection_report_inspections')
         .insert({
           vehicle_id: selectedVehicle || null,
           driver_id: selectedDriver || null,
@@ -344,7 +344,7 @@ const InspectionReport: React.FC<InspectionReportProps> = ({ user, onSuccess }) 
       });
 
       const { error: responsesError } = await supabase
-        .from('en_inspection_report_responses')
+        .from('enprotec_inspection_report_responses')
         .insert(responsePayload);
 
       if (responsesError) {

@@ -121,7 +121,7 @@ export const handleUpdateUser = async (
   console.log('[UPDATE-USER] Profile updates to apply:', JSON.stringify(profileUpdates, null, 2));
 
   const { error: profileError, data: profileData } = await supabaseAdmin
-    .from('en_users')
+    .from('enprotec_users')
     .update(profileUpdates)
     .eq('id', payload.id)
     .select('*')

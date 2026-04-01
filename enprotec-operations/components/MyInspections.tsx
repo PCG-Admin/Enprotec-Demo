@@ -102,25 +102,25 @@ const MyInspections: React.FC<MyInspectionsProps> = ({
 
     try {
       const { data, error: inspectionsError } = await supabase
-        .from('en_inspection_report_inspections')
+        .from('enprotec_inspection_report_inspections')
         .select(
           `
           id,
           inspection_date,
           site,
           overall_status,
-          driver:en_inspection_report_drivers (
+          driver:enprotec_inspection_report_drivers (
             full_name,
             email
           ),
-          vehicle:en_inspection_report_vehicles (
+          vehicle:enprotec_inspection_report_vehicles (
             registration_number,
             make,
             model
           ),
-          responses:en_inspection_report_responses (
+          responses:enprotec_inspection_report_responses (
             condition,
-            item:en_inspection_report_items (
+            item:enprotec_inspection_report_items (
               question,
               category,
               correct_answer
