@@ -884,12 +884,10 @@ export const sendApprovalWebhook = async (
   };
 
   try {
-    const response = await fetch(WEBHOOK_URL, {
+    const response = await fetch('/api/send-webhook', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url: WEBHOOK_URL, payload }),
     });
 
     if (!response.ok) {
@@ -1066,10 +1064,10 @@ export const sendDenialWebhook = async (request: WorkflowRequest, comment: strin
       ...recipientFields,
     };
 
-    const response = await fetch(DENIAL_WEBHOOK_URL, {
+    const response = await fetch('/api/send-webhook', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({ url: DENIAL_WEBHOOK_URL, payload }),
     });
 
     if (!response.ok) {
@@ -1165,10 +1163,10 @@ export const sendDispatchWebhook = async (request: WorkflowRequest, user: User):
       ...recipientFields,
     };
 
-    const response = await fetch(DISPATCH_WEBHOOK_URL, {
+    const response = await fetch('/api/send-webhook', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({ url: DISPATCH_WEBHOOK_URL, payload }),
     });
 
     if (!response.ok) {
