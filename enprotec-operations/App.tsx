@@ -461,7 +461,7 @@ const App: React.FC = () => {
       case 'EquipmentManager':
         return <EquipmentManager user={loggedInUser} />;
       case 'RejectedRequests':
-        return <RejectedRequests user={loggedInUser} />;
+        return <RejectedRequests user={loggedInUser} openForm={openForm} />;
       case 'Picking':
         return <Picking user={loggedInUser} />;
       case 'Deliveries':

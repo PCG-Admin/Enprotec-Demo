@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { supabase } from '../supabase/client';
-import { getMappedRole, WorkflowRequest, User, WorkflowStatus, UserRole } from '../types';
+import { getMappedRole, WorkflowRequest, WorkflowItem, User, WorkflowStatus, UserRole, StockItem, StoreType, FormType, departmentToStoreMap, Store } from '../types';
 
 interface RejectedRequestsProps {
     user: User;
+    openForm?: (type: FormType, context?: any) => void;
 }
 
-const RejectedRequests: React.FC<RejectedRequestsProps> = ({ user }) => {
+const RejectedRequests: React.FC<RejectedRequestsProps> = ({ user, openForm }) => {
     const [requests, setRequests] = useState<WorkflowRequest[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [actionError, setActionError] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState('');
 
     const fetchRequests = useCallback(async () => {
@@ -19,7 +21,7 @@ const RejectedRequests: React.FC<RejectedRequestsProps> = ({ user }) => {
             let query = supabase
                 .from('enprotec_workflows_view')
                 .select('*')
-                .eq('currentStatus', WorkflowStatus.REQUEST_DECLINED);
+                .in('currentStatus', [WorkflowStatus.REQUEST_DECLINED, WorkflowStatus.REJECTED_AT_DELIVERY]);
             
             // Filter by department unless the user is an Admin
             if (getMappedRole(user.role) !== UserRole.Admin && user.departments && user.departments.length > 0) {
@@ -51,6 +53,25 @@ const RejectedRequests: React.FC<RejectedRequestsProps> = ({ user }) => {
         );
     }, [requests, searchTerm]);
 
+    const handleBookToSalvage = async (req: WorkflowRequest, item: WorkflowItem) => {
+        if (!openForm) return;
+        setActionError(null);
+        try {
+            const store: StoreType = departmentToStoreMap[req.department as Store] || (req.department as unknown as StoreType);
+            const { data, error: fetchError } = await supabase
+                .from('enprotec_stock_view')
+                .select('*')
+                .eq('partNumber', item.partNumber)
+                .eq('store', store)
+                .limit(1)
+                .single();
+            if (fetchError || !data) throw new Error('Matching stock record not found for salvage.');
+            openForm('SalvageBooking', { stockItem: data as StockItem, maxQuantity: item.quantityRequested, workflowId: req.id });
+        } catch (err) {
+            setActionError(err instanceof Error ? err.message : 'Could not start salvage booking.');
+        }
+    };
+
     return (
         <div className="space-y-6">
              <div className="flex flex-col md:flex-row justify-between items-center gap-4">
@@ -72,6 +93,8 @@ const RejectedRequests: React.FC<RejectedRequestsProps> = ({ user }) => {
                 </div>
             </div>
 
+            {actionError && <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-md px-4 py-2">{actionError}</p>}
+
             <div className="bg-white rounded-lg border border-zinc-200">
                 <div className="overflow-x-auto">
                   <table className="min-w-full text-sm">
@@ -80,24 +103,26 @@ const RejectedRequests: React.FC<RejectedRequestsProps> = ({ user }) => {
                         <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">Request #</th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">Store</th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">Requester</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">Date Rejected</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">Reason for Rejection</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">Status</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">Date</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">Reason</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
                       {loading && (
                         <tr>
-                            <td colSpan={5} className="text-center py-12 px-6 text-zinc-500">Loading rejected requests...</td>
+                            <td colSpan={7} className="text-center py-12 px-6 text-zinc-500">Loading rejected requests...</td>
                         </tr>
                       )}
                       {error && (
                          <tr>
-                            <td colSpan={5} className="text-center py-12 px-6 text-red-600">{error}</td>
+                            <td colSpan={7} className="text-center py-12 px-6 text-red-600">{error}</td>
                         </tr>
                       )}
                       {!loading && !error && filteredRequests.length === 0 && (
                         <tr>
-                            <td colSpan={5} className="text-center py-12 px-6 text-zinc-500">{searchTerm ? 'No results found' : 'No rejected requests found.'}</td>
+                            <td colSpan={7} className="text-center py-12 px-6 text-zinc-500">{searchTerm ? 'No results found' : 'No rejected requests found.'}</td>
                         </tr>
                       )}
                       {!loading && !error && filteredRequests.map((wf: WorkflowRequest) => (
@@ -105,8 +130,24 @@ const RejectedRequests: React.FC<RejectedRequestsProps> = ({ user }) => {
                           <td className="px-6 py-4 whitespace-nowrap font-semibold text-zinc-900">{wf.requestNumber}</td>
                           <td className="px-6 py-4 whitespace-nowrap text-zinc-700">{wf.department}</td>
                           <td className="px-6 py-4 whitespace-nowrap text-zinc-700">{wf.requester}</td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${wf.currentStatus === WorkflowStatus.REJECTED_AT_DELIVERY ? 'bg-orange-100 text-orange-700' : 'bg-red-100 text-red-700'}`}>
+                              {wf.currentStatus}
+                            </span>
+                          </td>
                           <td className="px-6 py-4 whitespace-nowrap text-zinc-500">{new Date(wf.createdAt).toLocaleDateString()}</td>
                           <td className="px-6 py-4 whitespace-nowrap text-zinc-500 text-xs">{wf.rejectionComment || 'No reason provided.'}</td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            {wf.currentStatus === WorkflowStatus.REJECTED_AT_DELIVERY && openForm && wf.items?.map((item: WorkflowItem) => (
+                              <button
+                                key={item.partNumber}
+                                onClick={() => handleBookToSalvage(wf, item)}
+                                className="text-xs px-3 py-1.5 bg-amber-500 text-white font-semibold rounded-md hover:bg-amber-600 transition-colors"
+                              >
+                                Book to Salvage
+                              </button>
+                            ))}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
