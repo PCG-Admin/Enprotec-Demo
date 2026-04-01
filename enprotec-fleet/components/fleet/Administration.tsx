@@ -71,7 +71,7 @@ const Administration: React.FC<AdministrationProps> = ({ currentUser }) => {
       if (saved) return JSON.parse(saved);
     } catch { /* ignore */ }
     return {
-      companyName:         'Enprotec',
+      companyName: 'WMS/FMS',
       companyEmail:        '',
       companyPhone:        '',
       companyAddress:      '',
@@ -674,7 +674,7 @@ const Administration: React.FC<AdministrationProps> = ({ currentUser }) => {
                     <input type="email" value={userForm.email}
                       onChange={e => setUserForm(p => ({ ...p, email: e.target.value }))}
                       className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
-                      placeholder="john@enprotec.com" />
+                      placeholder="john@wmsfms.com" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Password *</label>

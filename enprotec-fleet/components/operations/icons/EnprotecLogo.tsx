@@ -7,7 +7,7 @@ const ENPROTEC_LOGO_SRC =
 const EnprotecLogo: React.FC<IconProps> = ({ className = 'h-8' }) => (
   <img
     src={ENPROTEC_LOGO_SRC}
-    alt="Enprotec Logo"
+    alt="WMS/FMS Logo"
     className={className}
     loading="lazy"
   />

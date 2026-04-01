@@ -107,7 +107,7 @@ const OpsSidebar: React.FC<Props> = ({ user, currentView, setCurrentView, collap
         </ul>
       </nav>
       <div className={`${collapsed ? 'px-2' : 'px-4'} py-4 mt-auto`}>
-        {!collapsed && <p className="text-xs text-zinc-400 text-center">&copy; 2025 Enprotec</p>}
+        {!collapsed && <p className="text-xs text-zinc-400 text-center">&copy; 2026 WMS/FMS</p>}
       </div>
     </aside>
   );

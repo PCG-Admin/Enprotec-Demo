@@ -232,7 +232,7 @@ const EmailTestPage: React.FC = () => {
         <td align="center">
           <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06);">
 
-            <!-- Header with Enprotec Branding (Denial) -->
+            <!-- Header with WMS/FMS Branding (Denial) -->
             <tr>
               <td style="background:linear-gradient(135deg, ${ENPROTEC_DARK} 0%, #3d3d3d 100%);padding:32px 24px;text-align:center;">
                 <h1 style="margin:0;color:#ffffff;font-size:28px;font-weight:700;letter-spacing:-0.5px;">ENPROTEC</h1>
@@ -309,7 +309,7 @@ const EmailTestPage: React.FC = () => {
             <tr>
               <td style="padding:24px;background:#f8fafc;border-top:1px solid #e2e8f0;">
                 <p style="margin:0 0 8px 0;color:#94a3b8;font-size:12px;text-align:center;">
-                  © ${new Date().getFullYear()} Enprotec. All rights reserved.
+                  © ${new Date().getFullYear()} WMS/FMS. All rights reserved.
                 </p>
                 <p style="margin:0;color:#cbd5e1;font-size:11px;text-align:center;">
                   This is an automated message from the Workflow Management System
@@ -341,7 +341,7 @@ const EmailTestPage: React.FC = () => {
         <td align="center">
           <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06);">
 
-            <!-- Header with Enprotec Branding -->
+            <!-- Header with WMS/FMS Branding -->
             <tr>
               <td style="background:linear-gradient(135deg, ${ENPROTEC_BLUE} 0%, ${ENPROTEC_LIGHT_BLUE} 100%);padding:32px 24px;text-align:center;">
                 <h1 style="margin:0;color:#ffffff;font-size:28px;font-weight:700;letter-spacing:-0.5px;">ENPROTEC</h1>
@@ -431,7 +431,7 @@ const EmailTestPage: React.FC = () => {
             <tr>
               <td style="padding:24px;background:#f8fafc;border-top:1px solid #e2e8f0;">
                 <p style="margin:0 0 8px 0;color:#94a3b8;font-size:12px;text-align:center;">
-                  © ${new Date().getFullYear()} Enprotec. All rights reserved.
+                  © ${new Date().getFullYear()} WMS/FMS. All rights reserved.
                 </p>
                 <p style="margin:0;color:#cbd5e1;font-size:11px;text-align:center;">
                   This is an automated message from the Workflow Management System
@@ -464,7 +464,7 @@ const EmailTestPage: React.FC = () => {
         <td align="center">
           <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06);">
 
-            <!-- Header with Enprotec Branding -->
+            <!-- Header with WMS/FMS Branding -->
             <tr>
               <td style="background:linear-gradient(135deg, ${ENPROTEC_BLUE} 0%, ${ENPROTEC_LIGHT_BLUE} 100%);padding:32px 24px;text-align:center;">
                 <h1 style="margin:0;color:#ffffff;font-size:28px;font-weight:700;letter-spacing:-0.5px;">ENPROTEC</h1>
@@ -604,7 +604,7 @@ const EmailTestPage: React.FC = () => {
             <tr>
               <td style="padding:24px;background:#f8fafc;border-top:1px solid #e2e8f0;">
                 <p style="margin:0 0 8px 0;color:#94a3b8;font-size:12px;text-align:center;">
-                  © ${new Date().getFullYear()} Enprotec. All rights reserved.
+                  © ${new Date().getFullYear()} WMS/FMS. All rights reserved.
                 </p>
                 <p style="margin:0;color:#cbd5e1;font-size:11px;text-align:center;">
                   This is an automated message from the Workflow Management System
@@ -826,7 +826,7 @@ const EmailTestPage: React.FC = () => {
                 <div className="p-6 bg-white rounded-lg shadow-sm border border-gray-200">
                     <h2 className="text-xl font-semibold mb-3 text-gray-900">3. Dispatch Email</h2>
                     <p className="text-gray-600 mb-4">
-                        Tests the dispatch notification with delivery information and Enprotec blue branding.
+                        Tests the dispatch notification with delivery information and WMS/FMS branding.
                     </p>
                     <button
                         onClick={testDispatchWebhook}

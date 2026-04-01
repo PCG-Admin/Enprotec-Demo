@@ -73,7 +73,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
             <EnprotecLogo className="h-16 w-auto" />
           </div>
 
-          <h2 className="text-xl font-bold text-gray-900 mb-1 text-center">Welcome to Enprotec Demo</h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-1 text-center">Welcome to WMS/FMS</h2>
           <p className="text-gray-500 text-sm mb-6 text-center">Sign in to continue</p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
