@@ -94,14 +94,18 @@ const GateReleaseForm: React.FC<GateReleaseFormProps> = ({ user, workflow, onSuc
         setDocuments(files);
     };
 
-    const dataUrlToBlob = async (dataUrl: string) => {
-        const response = await fetch(dataUrl);
-        return await response.blob();
+    const dataUrlToBlob = (dataUrl: string): Blob => {
+        const [header, base64] = dataUrl.split(',');
+        const mime = header.match(/:(.*?);/)?.[1] ?? 'image/png';
+        const binary = atob(base64);
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+        return new Blob([bytes], { type: mime });
     };
 
     const uploadSignature = async (fileName: string, dataUrl: string) => {
         if (!workflow) throw new Error('No workflow available for signature upload.');
-        const blob = await dataUrlToBlob(dataUrl);
+        const blob = dataUrlToBlob(dataUrl);
         const path = `signatures/gate-release/${workflow.id}/${fileName}`;
         const { error: uploadError } = await supabase.storage
             .from('Enprotec')

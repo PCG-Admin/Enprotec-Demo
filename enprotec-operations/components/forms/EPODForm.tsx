@@ -70,14 +70,18 @@ const EPODForm: React.FC<EPODFormProps> = ({ user, workflow, onSuccess, onCancel
         loadDraft();
     }, [workflow]);
 
-    const dataUrlToBlob = async (dataUrl: string) => {
-        const response = await fetch(dataUrl);
-        return await response.blob();
+    const dataUrlToBlob = (dataUrl: string): Blob => {
+        const [header, base64] = dataUrl.split(',');
+        const mime = header.match(/:(.*?);/)?.[1] ?? 'image/png';
+        const binary = atob(base64);
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+        return new Blob([bytes], { type: mime });
     };
 
     const uploadSignature = async () => {
         if (!workflow || !recipientSignature) return null;
-        const blob = await dataUrlToBlob(recipientSignature);
+        const blob = dataUrlToBlob(recipientSignature);
         const path = `signatures/epod/${workflow.id}/recipient-signature.png`;
         const { error: uploadError } = await supabase.storage
             .from('Enprotec')
