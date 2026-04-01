@@ -93,7 +93,7 @@ const OperationsModule: React.FC<Props> = ({ user, onSwitchToFleet, onLogout }) 
       case 'StockReceipts':   return <StockReceipts openForm={openForm} user={user} />;
       case 'Requests':        return <Requests user={user} openForm={openForm} />;
       case 'EquipmentManager': return <EquipmentManager user={user} />;
-      case 'RejectedRequests': return <RejectedRequests user={user} />;
+      case 'RejectedRequests': return <RejectedRequests user={user} openForm={openForm} />;
       case 'Picking':         return <Picking user={user} />;
       case 'Deliveries':      return <Deliveries user={user} openForm={openForm} />;
       case 'MyDeliveries':    return <MyDeliveries user={user} />;
