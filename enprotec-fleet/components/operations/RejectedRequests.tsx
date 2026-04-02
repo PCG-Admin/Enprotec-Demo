@@ -57,15 +57,17 @@ const RejectedRequests: React.FC<RejectedRequestsProps> = ({ user, openForm }) =
         if (!openForm) return;
         setActionError(null);
         try {
-            const store: StoreType = departmentToStoreMap[req.department as Store] || (req.department as unknown as StoreType);
-            const { data, error: fetchError } = await supabase
+            // Rejected-at-delivery items were never received into stock, so don't filter by store.
+            // Prefer a non-SalvageYard record; fall back to any record for this part number.
+            const db = supabase as any;
+            const { data: rows, error: fetchError } = await db
                 .from('enprotec_stock_view')
                 .select('*')
                 .eq('partNumber', item.partNumber)
-                .eq('store', store)
-                .limit(1)
-                .single();
-            if (fetchError || !data) throw new Error('Matching stock record not found for salvage.');
+                .neq('store', StoreType.SalvageYard);
+            if (fetchError) throw new Error('Could not look up stock record for salvage.');
+            const data = rows?.[0];
+            if (!data) throw new Error('No stock record found for this part number. Ensure the item exists in inventory.');
             openForm('SalvageBooking', { stockItem: data as StockItem, maxQuantity: item.quantityRequested, workflowId: req.id });
         } catch (err) {
             setActionError(err instanceof Error ? err.message : 'Could not start salvage booking.');

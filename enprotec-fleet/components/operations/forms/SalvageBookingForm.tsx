@@ -40,9 +40,12 @@ const SalvageBookingForm: React.FC<SalvageBookingFormProps> = ({ user, stockItem
         return <Card title="Error"><p>No stock item selected for salvage booking.</p></Card>;
     }
     
+    // For rejected-at-delivery items quantityOnHand may be 0 (goods never arrived).
+    // In that case use maxQuantity as the ceiling so the user can still book.
+    const effectiveOnHand = stockItem.quantityOnHand > 0 ? stockItem.quantityOnHand : (maxQuantity ?? 0);
     const allowedMax = Math.min(
-        stockItem.quantityOnHand,
-        Number.isFinite(maxQuantity ?? Infinity) ? (maxQuantity as number) : stockItem.quantityOnHand
+        effectiveOnHand,
+        Number.isFinite(maxQuantity ?? Infinity) ? (maxQuantity as number) : effectiveOnHand
     );
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -195,15 +198,15 @@ const SalvageBookingForm: React.FC<SalvageBookingFormProps> = ({ user, stockItem
                      <legend className="text-lg font-semibold text-zinc-900 border-b border-zinc-200 pb-2 mb-4 w-full">Salvage Details</legend>
                      <FormRow>
                         <FormLabel htmlFor="quantity">Quantity to Salvage</FormLabel>
-                        <FormInput 
-                            id="quantity" 
-                            type="number" 
+                        <FormInput
+                            id="quantity"
+                            type="number"
                             value={quantity}
-                            readOnly
+                            onChange={(e) => setQuantity(e.target.value)}
                             max={allowedMax}
                             min="1"
                             placeholder={`Max: ${allowedMax}`}
-                            required 
+                            required
                         />
                     </FormRow>
                     <FormRow>
