@@ -71,22 +71,28 @@ const SalvageBookingForm: React.FC<SalvageBookingFormProps> = ({ user, stockItem
                 photoUrl = data.publicUrl;
             }
 
-            // Look up the underlying stock item for this inventory record
-            const { data: originalInventory, error: inventoryLookupError } = await supabase
+            // stockItem.id from enprotec_stock_view is the stock_item_id (not the inventory row id)
+            const stockItemId = stockItem.id;
+
+            // Look up the actual enprotec_inventory row to get its id and site_id
+            // (stockItem.id from enprotec_stock_view is stock_item_id, not the inventory row id)
+            const db = supabase as any;
+            const { data: originalInventory, error: inventoryLookupError } = await db
                 .from('enprotec_inventory')
-                .select('stock_item_id, site_id')
-                .eq('id', stockItem.id)
+                .select('id, site_id')
+                .eq('stock_item_id', stockItemId)
+                .eq('store', stockItem.store)
                 .single();
             if (inventoryLookupError) throw inventoryLookupError;
 
-            const stockItemId = originalInventory?.stock_item_id;
-            if (!stockItemId) {
-                throw new Error('Unable to locate the linked stock item for this inventory record.');
+            if (!originalInventory) {
+                throw new Error('Unable to locate the inventory record for this item.');
             }
-            const siteId = originalInventory?.site_id ?? null;
+            const inventoryId: string = originalInventory.id;
+            const siteId: string | null = originalInventory.site_id ?? null;
 
             // Step 1: Create the salvage request record
-            const { error: salvageError } = await supabase.from('enprotec_salvage_requests').insert({
+            const { error: salvageError } = await db.from('enprotec_salvage_requests').insert({
                 stock_item_id: stockItemId,
                 quantity: salvageQuantity,
                 status: WorkflowStatus.SALVAGE_AWAITING_DECISION,
@@ -97,7 +103,7 @@ const SalvageBookingForm: React.FC<SalvageBookingFormProps> = ({ user, stockItem
             if (salvageError) throw salvageError;
 
             if (workflowId) {
-                await supabase
+                await db
                     .from('enprotec_workflow_requests')
                     .update({ current_status: WorkflowStatus.SALVAGE_COMPLETE })
                     .eq('id', workflowId);
@@ -124,16 +130,16 @@ const SalvageBookingForm: React.FC<SalvageBookingFormProps> = ({ user, stockItem
                     note: 'Booked to salvage'
                 },
             ];
-            const { error: movementError } = await supabase.from('enprotec_stock_movements').insert(movements);
+            const { error: movementError } = await db.from('enprotec_stock_movements').insert(movements);
             if (movementError) throw movementError;
 
             // Step 2: Deduct quantity from the original store
             const newOriginalQuantity = stockItem.quantityOnHand - salvageQuantity;
-            const { error: updateError } = await supabase.from('enprotec_inventory').update({ quantity_on_hand: newOriginalQuantity }).eq('id', stockItem.id);
+            const { error: updateError } = await db.from('enprotec_inventory').update({ quantity_on_hand: newOriginalQuantity }).eq('id', inventoryId);
             if (updateError) throw updateError;
-            
+
             // Step 3: Add or update quantity in the Salvage Store
-            const { data: salvageInventory, error: fetchError } = await supabase.from('enprotec_inventory')
+            const { data: salvageInventory, error: fetchError } = await db.from('enprotec_inventory')
                 .select('id, quantity_on_hand')
                 .eq('stock_item_id', stockItemId)
                 .eq('store', StoreType.SalvageYard)
@@ -143,12 +149,12 @@ const SalvageBookingForm: React.FC<SalvageBookingFormProps> = ({ user, stockItem
 
             if (salvageInventory) {
                 // Update existing record in Salvage Store
-                const newSalvageQuantity = (salvageInventory as any).quantity_on_hand + salvageQuantity;
-                const { error: updateSalvageError } = await supabase.from('enprotec_inventory').update({ quantity_on_hand: newSalvageQuantity }).eq('id', (salvageInventory as any).id);
+                const newSalvageQuantity = salvageInventory.quantity_on_hand + salvageQuantity;
+                const { error: updateSalvageError } = await db.from('enprotec_inventory').update({ quantity_on_hand: newSalvageQuantity }).eq('id', salvageInventory.id);
                 if (updateSalvageError) throw updateSalvageError;
             } else {
                 // Create new record in Salvage Store
-                const { error: insertSalvageError } = await supabase.from('enprotec_inventory').insert({
+                const { error: insertSalvageError } = await db.from('enprotec_inventory').insert({
                     stock_item_id: stockItemId,
                     store: StoreType.SalvageYard,
                     quantity_on_hand: salvageQuantity,
